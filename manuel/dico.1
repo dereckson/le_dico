@@ -1,0 +1,423 @@
+.\"        		DICO - R.Cougnenc 1992 -          
+.\"
+.\"	Ceci constitue la page de manuel a installer dans le repertoire
+.\"	/usr/man/man1 en principe.
+.\"
+.\"
+.\"
+.\"
+.TH DICO 1L  "V 1.1 Octobre 1992"  "Le Dico" "Manuel Utilisateur" 
+
+.SH NOM
+\fBdico\fR - Recherche d'un mot dans un lexique Francais 
+
+.SH SYNTAXE
+\fBdico\fR pattern1 pattern2 patternN ... ...
+
+.SH DESCRIPTION
+\fBdico\fR est un petit programme permettant d'exploiter un lexique de
+mots Francais, afin d'en verifier l'orthographe par exemple.
+Il supporte une partie des expressions rationnelles afin de pouvoir trouver
+un mot ou un groupe de mots a partir d'une fraction du terme recherche.
+\fBdico\fR recherche le dictionnaire soit dans le chemin pointe par la
+variable d'environnement DICO, soit si elle n'est pas definie par defaut
+dans le repertoire /usr/local/lib/dico.
+.PP
+La version MS-DOS procede de maniere un peu differente, voir le paragraphe
+MS-DOS a la fin de ce manuel.
+
+.PP
+Le dictionnaire fourni avec \fBdico\fR est simplement organise en 26
+fichiers ascii, un pour chaque initiale, un mot par ligne. Ceci permet
+a quiconque de rajouter un mot inconnu dans le lexique, a l'aide d'un
+simple editeur de texte.
+.PP
+Ce lexique est le fruit de nombreuses heures de travail de nombreuses
+personnes, il est tres complet notamment au point de vue technique et
+scientifique, vous y trouverez nombre de termes ne figurant pas dans
+les dictionnaires standards.
+.PP
+Il contient egalement les \fBCodes Postaux\fR des principales communes
+de France, ce qui a l'usage s'avere tres pratique.
+
+.PP
+Les fichiers se nomment \fBa.dic\fR, \fBb.dic\fR,...\fB,z.dic\fR, nom 
+de fichiers compatibles avec la plupart des systemes j'espere. Un fichier 
+supplementaire nomme \fBversion.dic\fR permet de connaitre la date et le 
+nom de l'auteur de la derniere mise a jour.
+
+.PP
+Ce format texte, tres simple, est certes assez encombrant sur le disque, mais
+il a ete choisi en raison de l'extreme simplicite d'emploi pour tout le monde.
+Les machines sont maintenant largement equipees en disque dur pour supporter
+autant de donnees (environ 1 ou 2 Mo selon la version du lexique) sans la
+complication d'arbres ou de
+compactage. Chacun est libre de recuperer ces donnees et de s'ecrire
+ses propres programmes pour les gerer, ce format facilite tout.
+
+.SS EXEMPLES d'UTILISATION
+Le \fBdico\fR prend une ou plusieurs expressions a rechercher sur sa ligne
+de commande. Un nombre quelconque d'arguments est possible, il n'est
+limite que par la longueur de la ligne de commande possible sur votre
+systeme d'exploitation.
+.PP
+Ces arguments obeissent a un petit sous-ensemble des expressions
+rationnelles, l'utilisation de regexp() aurait ete trop lourde pour
+un petit programme comme celui-ci.
+.TP
+.B	"\fBdico\fR  machin"
+Recherchera le mot machin.
+.TP
+.B	"\fBdico\fR  trou*r"
+Recherchera tous les mots commencant par "trou" et se terminant par "r".
+.PP
+Les operateurs reconnus sont:
+.TP
+.B	"\fB*\fR"
+Remplace toute une serie de caracteres.
+.TP
+.B	"\fB?\fR"
+Remplace un seul caractere, a la position ou il se trouve.
+.TP
+.B	 "\fB[c-f]\fR"
+Remplace un ensemble de caracteres, ici de la lettre 'c' a la lettre 'f'
+.TP 
+.B	"\fB[^loq]\fR"
+Exclut un ensemble de caracteres, ici  les lettres 'l' , 'o' et  'q'
+
+.PP
+En pratique, la plupart du temps vous n'utiliserez que \fB*\fR, lorsque
+vous savez comment commence un mot mais avez des doutes sur le milieu ou
+la fin. Par exemple :
+.TP
+.B      "\fBdico t?ro*ne\fR"
+Devrait a coup sur vous trouver l'orthographe de Tyrothricine...
+
+.SH CODES POSTAUX
+Les codes postaux des principales communes importantes de France ont
+ete saisis dans ce dictionnaire, on peut donc en une seconde trouver
+le code recherche, ce qui est plus rapide que de se souvenir a quel
+endroit l'on a range l'annuaire papier officiel !
+
+.PP
+Ces codes sont inscrits a la suite du nom de la commune, separes en
+principe par une tabulation pour simple raison de proprete d'affichage.
+Pour cette raison, il est impossible de trouver un code postal en
+entrant le nom exact de la ville recherchee, on doit absolument utiliser
+au moins le caractere de remplacement '\fB*\fR' a la suite de ce nom.
+
+.PP 
+Par exemple pour trouver le code postal de la ville d'Antony, vous
+devez taper la commande:
+.TP
+.B	"\fBdico antony*\fR"
+.PP
+Attention, un certain nombre de villes sont orthographiees helas
+incompletement, en utilisant une notation abregee. Par exemple,
+\fB"saint"\fR et \fB"sainte"\fR sont respectivement abreges par
+\fB"st"\fR et \fB"ste"\fR.
+
+.PP 
+Le mieux pour trouver a coup sur par exemple le code ou les codes
+postaux de "Saintes Maries de la Mer" est de lancer la recherche comme
+suit:
+.TP
+.B	"\fBdico s*marie*mer*\fR"
+
+.PP
+En raison de la simplicite d'organisation du lexique, la recherche ne
+fait appel a aucun algorithme complique, on pourrait presque reecrire
+cette commande avec grep et les outils standards. C'est pourquoi il
+est conseille de toujours donner dans la mesure du possible, la premiere
+lettre du mot a rechercher. En effet,  dans le cas inverse le programme
+recherche dans TOUS les fichiers sans distinction, ce qui est beaucoup
+moins rapide ( 26 fois exactement...)
+
+
+.SH CARACTERES ACCENTUES
+Le dictionnaire contient bon nombre de mots comportant des accents.
+Les caracteres sont donc definis sur 8 bits et non 7; si vous avez
+recupere ce programme en version DOS, il utilise le jeu de carateres
+IBM-Etendu de l'IBM-PC.    Si vous l'avez recupere en version UN*X,
+c'est le jeu ISO 8859-1 qui est utilise, dit Latin-1.
+
+.PP
+La recherche se fait en considerant toute minuscule accentuee comme
+son equivalent non accentue, et inversement; vous n'etes pas oblige
+d'entrer des accents dans la commande de recherche. Ceci ralentit un
+peu le temps de traitement, mais a notre epoque les machines sont
+rapides...!
+
+.SH OPTIONS
+Le programme \fBdico\fR possede deux fonctionnalites supplementaires,
+en le lancant avec les options suivantes sur la ligne de commande :
+
+.TP
+.B	"\fBdico \-v\fR "
+Affichera le numero de version du programme, et la date de mise a
+jour du lexique; ainsi que le nom de la personne ayant effectue
+cette mise a jour. ( fichier version.dic )
+
+
+.TP
+.B	"\fBdico \-c\fR " Comptera tous les mots contenus dans le
+lexique, en affichant les resultats intermediaires pour chaque
+lettre de l'alphabet, puis le total.
+
+.SH TERMINAL et ACCENTS
+Par defaut, les mots affiches sont au format d'accents utilises par
+le systeme ( DOS ou ISO Latin-1). Vous pouvez toutefois demander au
+programme \fBdico\fR de traduire a l'affichage ces accents, en
+fonction de votre terminal. ( ceci n'est valide que dans la version
+UN*X, sous DOS cela n'a aucun interet.)
+.PP
+Ceci se fait en definissant une variable d'environnement nommee
+\fBDICOTERM\fR.
+.PP
+Celle-ci peut prendre trois noms differents, et doit etre utilisee dans
+les cas suivants :
+    
+.TP
+.B	"\fBDICOTERM=ASCII\fR "
+Votre terminal est 7 bits et ne connait que l'ASCII pur. Dans ce cas
+tous les accents seront traduits par la lettre non accentuee correspondante.
+
+.TP
+.B	"\fBDICOTERM=IBM\fR "
+Votre terminal affiche le jeu IBM etendu MS-DOS, et le dictionnaire est
+au format ISO. Dans ce cas les accents seront correctement traduits pour
+le terminal.
+
+.TP
+.B	"\fBDICOTERM=ISO\fR
+Votre terminal affiche le jeu ISO Latin-1 et le dictionnaire est au
+format MS-DOS. Dans ce cas ( peu probable), les accents seront traduits
+correctement.
+.PP
+N'utilisez jamais cette variable d'environnement si vous etes sur la
+console LINUX ou si vous utilisez la version MS-DOS. Les resultats
+n'auront aucun interet !
+
+.SH VOIR AUSSI
+grep(1) spell(1) spellf(1)
+
+.SH CLEANDIC
+Le programme cleandic est un petit utilitaire permettant de nettoyer
+le lexique automatiquement, de toute ligne vide ou de commentaires,
+et de passer les fichiers au format texte Un*X, chaque ligne etant
+separee donc par un simple LF, caractere 0A.
+.PP
+Les utilisateurs de MS-DOS auront tout interet a lancer ce programme
+apres l'installation des fichiers du lexique, en effet la commande
+\fBdico\fR sous DOS accepte parfaitement ce format texte en lieu et
+place du traditionnel CR-LF, ainsi que de nombreux editeurs de
+texte. On gagne un octet par ligne.
+
+.SH KILLPOSTE
+Le programme \fBkillposte\fR fonctionne comme le programme ci-dessus,
+mais permet d'eliminer du lexique toutes les communes et leurs codes
+postaux.
+.PP
+Ce programme fut rendu necessaire en raison du courrier recu, demandant
+la suppression des communes Francaise du lexique. Preferant ne leser
+personne, ceux qui n'en ont pas besoin peuvent eux meme prendre la
+decision d'alleger leur liste.
+
+.SH BUGS
+Vous constaterez qu'il y a encore du travail a faire sur ce lexique,
+certains mots apparaissant a la fois en version non accentuee, et en
+version accentuee. Certaines fautes de frappe ont pu etre glissees,
+certaines expressions peuvent etre erronees. De meme, il se peut que
+certains mots apparaissent en double... 
+Neanmoins il donne satisfaction dans la plupart des cas, en l'etat.
+.PP
+En dehors de ces imperfections, il contient les noms communs, verbes,
+participes, et quelques conjugaisons irregulieres, ainsi que certains
+noms propres; ce sont en regle generale les termes dont on doute de
+l'orthographe qui sont inclus dans ce lexique, au fur et a mesure de
+son utilisation.
+
+ 
+.SH VERSION
+Normalement, la commande "dico -v" devrait vous afficher la date de
+derniere mise a jour du lexique, simplememnt en allant lire le fichier
+texte "version.dic" qui se trouve dans le meme repertoire que les
+fichiers du dictionnaire. Pensez a mettre a jour ce fichier lors de
+vos propres modifications !
+
+
+.SH COPYRIGHT
+Le programme \fBdico.c\fR est \fB(c) Rene Cougnenc\fR 1992, et doit
+etre considere comme \fBFREEWARE\fR, c'est a dire que vous pouvez
+le distribuer gratuitement a quiconque, a condition d'avoir la sympathie
+de ne pas en faire un usage commercial sans en avertir l'auteur :-)
+
+.PP
+Vous pouvez modifier les sources a votre convenance, utiliser tout ou
+partie du programme pour d'autres realisations. Vous etes fortement
+encourages a apporter des ameliorations et a les communiquer !
+
+.PP
+Le \fBdictionnaire\fR ne peut faire l'objet d'aucune propriete, il a
+ete realise petit a petit par l'adjonction manuelle de nombreuses personnes
+dont vous pouvez faire partie: \fBContinuez a l'enrichir\fR tant que vous
+le pouvez, ou a corriger d'eventuelles erreurs. Faites circuler votre
+travail et \fBsurtout\fR modifiez le fichier \fB"version.dic"\fR, afin
+d'indiquer la date de mise a jour de ce dictionnaire, pour que tout le
+monde sache ou il en est et qui a pu faire les dernieres betises :-)
+
+.SH MISE A JOUR - FORMAT
+
+Le lexique peut etre mis a jour ou corrige a l'aide d'un simple editeur
+de texte. Les mots doivent figurer en lettres \fBminuscules\fR, c'est
+le programme d'affichage qui formatte les sorties.
+Ceci est \fBtres important\fR pour la routine de recherche !
+
+.PP
+Les accents doivent etre entres au format courant utilise par la machine,
+correspondant au programme executable qui a ete compile. ( sous LINUX,
+ISO, sous DOS, IBM ). Il est preferable de conserver le format texte
+Unix ( un simple line-feed entre chaque ligne) plutot que celui de DOS,
+plus encombrant. (CR/LF). La version MS-DOS s'accomode tres bien de ce
+format, par contre sous **IX il est imperatif de supprimer un eventuel
+format MS-DOS.
+
+.PP
+Il ne doit y avoir qu'\fBun seul mot par ligne\fR (ou un mot compose),
+l'ordre alphabetique n'est pas necessaire pour que le programme
+fonctionne, mais il affichera les termes dans l'ordre rencontre lors
+de la recherche.
+
+.PP 
+Toute ligne commencant par le caractere '\fB#\fR' sera consideree
+comme une ligne de commentaire par le programme. Toutefois n'en abusez
+pas car chaque ligne ralentit la recherche bien entendu.
+
+.PP 
+Les Codes Postaux sont inscrits de la maniere suivante:
+.TP
+.B	ville <TAB> CODE
+.PP
+La tabulation n'est la que pour des raisons de proprete d'affichage
+et d'economie de caracteres. Tachez tout de meme de le respecter, la
+version 1.1 fait usage de cette tabulation pour reconnaitre les communes
+et formater plus proprement l'affichage...
+
+
+.PP     
+Pensez a mettre a jour le fichier \fB"version.dic"\fR, simple texte
+indiquant qui a fait quoi et a quel moment , afin de savoir ce qu'il
+en est du lexique !!!!!
+
+.SH OUTILS
+Le sous-repertoire \fBtools\fR de la distribution, contient en vrac
+un certain nombre de petits utilitaires ecrits pour les besoins de
+la cause. Ils sont fournis en l'etat, pour rendre service, mais ne
+pretendent pas etre des exemples de programmation ! Ce sont des
+exemples au contraire de la souplesse du langage C, apte a depanner
+rapidement en toutes circonstances !
+
+.PP
+Ils sont fournis non compiles, libre a vous de les porter sur votre
+systeme si vous en avez besoin, certains peuvent ne pas passer sous
+MS-DOS toutefois, ou d'autres contenant de high-bits peuvent poser
+des problemes a votre compilateur.
+
+.PP
+Le programme \fBibm2iso.c\fR permet de transformer un fichier texte
+venant de MS-DOS, au format Un*x. Les caracteres accentues sont traduits
+dans le jeu ISO Latin-1 utilise par de nombreux systemes.
+Si vous le linkez avec le nom
+\fBiso2ibm\fR, son fonctionnement sera inverse, il transformera les
+fichiers textes ISO + UN*X au format MS-DOS, accents IBM etendus et
+lignes separees par des CR-LF.
+
+.PP
+Le programme \fBeclate.c\fR permet de repartir une liste de mots
+(un par ligne) dans un ordre quelconque, dans 26 fichiers comme ceux
+de ce lexique. Il n'est pas fourni compile, c'est peu de chose et
+vous pourrez l'adapter a vos besoins le cas echeant.
+Vous pourrez ainsi par exemple ecrire une routine recuperant les mots
+de n'importe quel texte et les rajouter au lexique ( apres verification
+de l'orthographe s'il vous plait !)
+.PP
+Le programme \fBputbanner.c\fR est utilise pour rajouter dans chaque
+fichier *.dic, la banniere \fBLe Dico\fR contenant les conditions de
+diffusion, afin de realiser la version de distribution du lexique.
+.PP
+Les bouts de source ou de shell-script qui trainent sont donnes en
+vrac, ce sont quelques trucs qui ont servi de temps a autres pour
+realiser le lexique, sans garantie de fonctionnement parfait :-)
+
+.SH Version MS-DOS
+Bien que realise et maintenu sous \fBLINUX\fR, Le Dico existe en version
+MS-DOS, qui bien que moins performante est devenue populaire.
+Les differences essentielles avec la version normale sont le jeu de
+caracteres utilise et le chemin de recherche du lexique.
+.PP
+Les caracteres 8 bits accentues sont ceux de l'IBM-PC, dit IBM-etendu.
+Les fichiers du lexique sont cherches dans plusieurs endroits ( ce qui
+ralentit certes l'utilisation mais etait indispensable pour conserver
+une simplicite d'installation aux utilisateurs DOS).
+.PP
+Tout d'abord, la variable d'environnement DICO est recherchee. Si elle
+n'est pas trouvee, le lexique est recherche dans un sous repertoire
+nomme \fBlexique\fR partant du repertoire ou se trouve le programme
+executable \fBdico.exe\fR.  (Si dico.exe se trouve dans c:/util par
+exemple, ce sera c:/util/lexique ).
+.PP
+Si les fichiers ne sont pas la non plus, c'est un repertoire nomme
+/usr/local/lib/dico qui sera scrute, par compatibilite avec la version
+normale Un*ix. Si enfin ils ne se trouvent pas la, en desespoir de cause
+le programme tentera de les trouver dans le repertoire courant.
+
+.SH REMERCIEMENTS
+Ce lexique a pu voir le jour grace aux contributions volontaires ou
+involontaires ( analyse automatique de messages...) de nombreuses
+personnes dont voici une liste non exhaustive:
+
+.PP
+Alain  Lemell, Alain  Vermotgaud, Attila   Altan, Bernard
+Guillaumot, Bernard  Milovanovic, Bernard  Norek, Bertrand
+Petit, Cedric Ingrand, Christian Delannoy, Christian Perrier,
+Daniel  Morais, Daniel Toussaint, Denis Gradel, Antony Filleau,
+Edmond Vandermeersch, Emmanuel Charpentier,Patrick Montgermont,
+Emmanuel Roussin, Eric Richet, Francis Rozange, Gerard Mannig,
+Francois Jarraud, Francois Millet, Francois Vigneron, Georges
+Wanderstok, Javier Castillo, Jean-Christophe Peyrard,
+Jean-Claude Ambroise, Jean-Luc Betin, Jean-Marie Guitard,
+Joel  Surcouf, Jps  Gueniat, Klaus  Steinschaden, Laurent
+Graffin, Mic  Ralle, Michel  Duffaud, Michel Perez, Michel
+Pinquier, Nat Makarevitch, Olivier Girard, Lionel Delafosse,
+Ollivier Civiol, Ollivier  Robert, Philippe Abegg, Jacques Lipka,
+Pascal  Petit, Pascal Reszetko, Pascal Tremong, Paul Milliot,
+Philippe David, Philippe Duflot, Philippe Paternotte,
+Philippe Waki, Pierre Tran, Pierre Zarka, Regis Rampnoux,
+Rene Cougnenc, Rene Durand, Sam Cabannes, Serge Delbono,
+Serge Gautier, Stef Evain, Stephane Derny, Vincent Gillet,
+Emmanuel Bataille.
+
+.PP 
+Il a demande plus d'une centaine d'heures ensuite a l'auteur
+du petit programme \fBdico\fR, pour fusionner l'ensemble des
+fichiers, trier et corriger, rajouter ou oter des mots.
+Le lexique tel que fourni avec cette version 1.0, a ete retravaille
+manuellement mot par mot, la fatigue expliquera les erreurs qui
+ont pu se glisser malicieusement dedans...  Merci de me comprendre :-)
+
+.PP
+Sont a remercier particulierement \fBWolfgang LENERZ\fR du  club
+\fBQL Contact France\fR (Utilisateurs de machines Sinclair QL), qui
+a fourni gracieusement un lexique fort utile realise pour un projet
+d'un type proche de \fBLe Dico\fR, ainsi que \fBHerve Blaise\fR,
+\fB Nat Makarevitch\fR et \fBGeorges Wanderstok\fR pour leurs
+importantes contributions.
+.PP
+Enfin, un double aperitif special pour \fBSerge DELBONO\fR, qui eut
+le courage de faire un superbe portage de \fBLe Dico\fR pour
+Microsoft Windows (r).
+
+.PP 
+Remercions egalement Linus Torvalds et tous les createurs du
+systeme \fBLINUX\fR, superbe UN*X gratuit, sans lequel le travail du
+lexique aurait ete un pensum sous MS-DOS...

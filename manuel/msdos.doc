@@ -1,0 +1,242 @@
+   +--------------------[ Precisions  sur ]-----------------------+
+   |                                                              |
+   |    LL       EEEEEEE        DDDDDD   IIII   CCCCC    OOOOO    |
+   |    LL       EE             DD   DD   II   CC   CC  OO   OO   |
+   |    LL       EEEE           DD   DD   II   CC       OO   OO   |
+   |    LL       EE             DD   DD   II   CC       OO   OO   |
+   |    LL       EE             DD   DD   II   CC   CC  OO   OO   |
+   |    LLLLLLL  EEEEEEE        DDDDDD   IIII   CCCCC    OOOOO    |
+   |                                                              |
+   +--------------------------------------------------------------+
+
+          A l'attention des utilisateurs de la commande 'DICO'
+
+                           sous MS-DOS
+
+         Le  courrier re‡u concernant la premiŠre version de 'Le Dico' a
+         montr‚ que de nombreux utilisateurs du systŠme MS-DOS  ignorent
+         beaucoup  de  choses  sur  l'utilisation  ‚l‚mentaire  de  leur
+         systŠme ( qui pourtant sont  dans  leur  documentation...),  et
+         avaient  des  difficult‚s … comprendre la syntaxe pourtant trŠs
+         simple de la commande 'DICO'.
+
+         Nous les encourageons donc … lire attentivement ce qui suit.
+
+
+                            --------------------------
+
+
+LE SHELL
+--------
+
+         La commande "DICO" prend  des  "arguments"  sur  sa  "ligne  de
+         commande".   Ces  arguments  sont tout ce que vous pouvez taper
+         sous DOS, aprŠs le nom de la commande "DICO".
+
+         C'est un dialogue similaire … la langue parl‚e, par exemple  on
+         pourrait  imaginer  un  programme  nomm‚ "je_voudrais" que l'on
+         appellerait des maniŠres suivantes:
+
+                C:\>  Je_Voudrais    un_whisky
+                C:\>  Je_Voudrais    un_pastis des_gla‡ons
+
+         Dans  ce  cas,  un_whisky,  un_pastis,  des_gla‡ons  sont   les
+         "arguments" de la commande "je_voudrais".
+
+         Ces arguments sont pass‚s au programme DICO.EXE par le "shell",
+         qui  est  l'  "interpr‚teur  de  commandes"  du  systŠme,   qui
+         s'appelle pour la plupart d'entre vous:  COMMAND.COM.
+
+         Ce  shell  analyse la ligne de commande en s‚parant cette ligne
+         de commande en autant d'arguments  qu'il  y  a  d'espaces  dans
+         cette ligne.
+
+         C'est … dire que pour la commande:
+
+                C:\> DICO  toto titi tata
+
+         Le  programme 'DICO' recevra TROIS arguments, "toto", "titi" et
+         "tata".
+
+         Le programme 'DICO' traite ces arguments dans  l'ordre  INVERSE
+         dans  lequel  il  les  re‡oit,  (  ce  n'est qu'une question de
+         simplicit‚ de  programmation),  dans  le  cas  de  la  commande
+         ci-dessus il recherchera dans l'ordre:
+
+                - le mot 'tata'
+                - le mot 'titi'
+                - le mot 'toto'
+
+         Dico  peut  faire  en  une  seule commande autant de recherches
+         qu'il re‡oit d'arguments, ce nombre n'est limit‚ que  par  DOS,
+         par la longueur maximum de la ligne de commandes.
+
+         Si  vous d‚sirez rechercher un mot contenant un ou des espaces,
+         vous ne pouvez donc pas l'indiquer tel quel  sur  la  ligne  de
+         commande, car par exemple la commande :
+
+               C:\> DICO  nature morte
+
+         Ne  recherchera  jamais  l'expression  "Nature Morte" mais fera
+         fatalement deux recherches, la premiŠre sur "morte" et  l'autre
+         sur  "nature",  puisque  le  shell  lui  aura  ainsi pass‚ deux
+         arguments distincts.
+
+         Pour passer l'expression contenant un espace, il est n‚cessaire
+         de  mettre  cette  expression "entre quotes", afin d'indiquer …
+         Command.Com de la consid‚rer comme un argument unique :
+
+               C:\> DICO  "nature morte"
+
+         Effectuera donc la recherche voulue.
+
+
+                            --------------------------
+
+
+LES JOKERS
+----------
+
+         Il est fr‚quent que l'on ait … sp‚cifier dans  un  systŠme,  un
+         nom   de   fichier   compliqu‚,  ou  dont  on  ne  connait  pas
+         l'orthographe exacte.  MS-DOS propose donc des  'caractŠres  de
+         remplacement',  appel‚s 'jokers', qui remplacent tout ou partie
+         d'un nom pour trouver plus facilement  une  s‚rie  de  fichiers
+         ayant des racines communes.
+
+         Votre  manuel  d‚crit les caractŠres '*' et '?', nous supposons
+         que vous savez d‚j… utiliser ces choses l… tout de mˆme !
+
+         La commande DICO reconnait dans  ses  arguments  les  'jokers',
+         afin  de rendre les recherches trŠs faciles lorsqu'on recherche
+         l'orthographe d'un mot ou d'un groupe de mots.
+
+         Mais si Ms-DOS a copi‚ une toute petite partie  du  systŠme  de
+         jokers  utilis‚  sous les systŠmes Unix, Le Dico en utilise une
+         bien plus grande partie, ‚tant de ce fait bien plus puissant !
+
+         Les  arguments  de  la  commande  DICO sont g‚r‚s avec un petit
+         sous-ensemble   des   Expressions   Rationnelles   (    Regular
+         Expressions).   Les  v‚ritables  expressions rationnelles n'ont
+         pas ‚t‚ utilis‚es pour ne pas grossir inutilement la taille  du
+         programme DICO avec des choses que vous n' utiliseriez que trŠs
+         peu, voire jamais.
+
+         Ce petit sous-ensemble comprend le  traitement  des  caractŠres
+         '*',  '?',  et  des  ensembles  '[]',  qui  peuvent contenir la
+         n‚gation '^'.
+
+         Voyons comment cela fonctionne:
+
+         Le caractŠre '*'  permet  de  remplacer  une  s‚rie  de  taille
+         quelconque de tous les caractŠres possibles.  Par exemple "dico
+         mer*" trouvera tous les mots  qui  commencent  par  "mer";   la
+         commande "dico mer*que" trouvera tous les mots qui commence par
+         "mer" et se terminent par "que".
+
+         C'est le caractŠre le plus utile pour une application comme  Le
+         Dico.
+
+
+         Le  caractŠre  '?'  permet  de  remplacer  UN SEUL caractŠre, …
+         l'endroit pr‚cis o— il se trouve dans le mot.  Par  exemple  la
+         commande  "dico  mar?"  trouvera  probablement  des  mots comme
+         "mare", "mari", etc...
+
+         Les caractŠres "[]" ( toujours ensemble ) permettent de d‚finir
+         un ensemble de caractŠres.  A l'int‚rieur, vous pouvez pr‚ciser
+         explicitement les caractŠres d‚sir‚s, comme "[abdfi]",  ou  une
+         s‚rie  de  caractŠres  ascii en indiquant les limites, s‚par‚es
+         par  un  tiret:   "[p-z]"  indiquant  par  exemple   tous   les
+         caractŠres compris entre 'p' et 'z', inclus.
+
+         Si   vous   faites  pr‚c‚der  cette  s‚rie  de  caractŠres  par
+         l'op‚rateur '^', la recherche est invers‚e, c'est  …  dire  que
+         vous  sp‚cifiez que vous ne voulez pas des mots contenant cette
+         s‚rie de caractŠres.  Attention,  certains  shells  autres  que
+         COMMAND.COM,  comme 4dos par exemple, expansent d‚j… d'eux mˆme
+         certaines expressions, dans le doute utilisez des  quotes  pour
+         ne pas ˆtre surpris...
+
+                            --------------------------
+
+VARIABLES d'ENVIRONNEMENT
+-------------------------
+
+         Une   "Variable   d'Environnement"  est  en  quelque  sorte  un
+         "message" que le systŠme  laisse  …  disposition  de  tous  les
+         programmes  pour  qu'ils  puissent  se  renseigner sur un sujet
+         particulier.
+
+         La plus courante sous votre systŠme est "PATH", indiquant  dans
+         quels   r‚pertoires   COMMAND.COM  doit  aller  rechercher  les
+         programmes … ‚x‚cuter.
+
+         Une variable d'environnement consiste en  un  nom,  suivi  d'un
+         signe  "=",  et  de  la  valeur … renseigner juste aprŠs, et se
+         positionne avec la commande SET.
+
+         Le Dico peut utiliser ce systŠme pour rechercher  l'endroit  o—
+         se  trouve  ses fichiers lexique;  lorsqu'il trouve la variable
+         nomm‚e "DICO=D:\truc\machin" par  exemple,  il  ira  uniquement
+         rechercher    les   fichiers   lexique   dans   le   r‚pertoire
+         "D:\truc\machin".
+
+
+                            --------------------------
+
+
+
+FICHIERS STANDARDS ET REDIRECTION
+---------------------------------
+
+         Vu  du  c“t‚ de votre systŠme d'exploitation, ce que vous voyez
+         sur votre ‚cran est en r‚alit‚ ‚crit dans un FICHIER.
+
+         Ce fichier est un fichier sp‚cial que l'on nomme  un  "device",
+         sous MS-DOS par exemple l'un d'entre eux s'appelle "CON:", tout
+         ce qui est ‚crit dans ce fichier "CON:" sera  dans  la  r‚alit‚
+         affich‚ sur l'‚cran.
+
+         Votre  systŠme dispose toujours, sans que vous ayez … savoir o—
+         ils sont, d'au moins TROIS fichiers 'device' OUVERTS, qui sont:
+
+            stdin : Fichier d'entr‚e standard, par d‚faut votre clavier.
+            stdout: Fichier de sortie standard, par d‚faut votre ‚cran.
+            stderr: Fichier d'affichage des ERREURS, par d‚faut c'est
+                    aussi votre ‚cran.
+
+
+         Vous avez la possibilit‚  de  modifier  ces  directions  depuis
+         votre  shell  en  utilisant les op‚rateurs de redirection '<' ,
+         '>' et '>>'.
+
+         Ils permettent de rediriger les flux d'entr‚e ou de sortie vers
+         un  fichier  PHYSIQUE  de votre choix.  Par exemple la commande
+         "dir > dir.lst" ne vous affichera plus rien … l'‚cran, mais  ce
+         que vous auriez eu par la commande "dir" se retrouve ‚crit dans
+         le fichier "dir.lst".
+
+         Mais comme vous n'avez redirig‚ QUE  la  sortie  STANDARD,  une
+         ‚ventuelle  erreur  affich‚e sur la sortie d'erreur sera malgr‚
+         tout visible sur l'‚cran, et uniquement sur celui-ci.
+
+         Le fichier d'erreurs ne peut pas ˆtre redirig‚ sous MS-DOS avec
+         le shell "command.com" d'origine, peu importe pour vous.
+
+         La  commande  "DICO"  et  les  outils  associ‚s  utilisent bien
+         entendu ces flux standards, ce qui veut dire  que  vous  pouvez
+         r‚cup‚rer dans un fichier la sortie de "dico".  Les messages de
+         "DICO" sont TOUJOURS affich‚s  sur  la  sortie  d'ERREURS,  une
+         redirection  permet  ainsi  de  r‚cup‚rer  uniquement  les mots
+         trouv‚s, TOUJOURS affich‚s sur  la  sortie  STANDARD,  dans  un
+         fichier.
+
+                            --------------------------
+
+         Voil…, cette petite initiation faite, vous pouvez dŠs … pr‚sent
+         lire  le fichier "Manuel.Txt".  Il s'agit de la sortie Ascii du
+         manuel complet de Le DICO, vous savez maintenant tout ce  qu'il
+         faut pour comprendre ce qu'il y a dedans !
+
+                                                                R.C.

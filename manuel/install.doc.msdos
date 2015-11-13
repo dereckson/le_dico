@@ -1,0 +1,38 @@
+   +--------------------[ Installation De ]-----------------------+
+   |                                                              |
+   |    LL       EEEEEEE        DDDDDD   IIII   CCCCC    OOOOO    |
+   |    LL       EE             DD   DD   II   CC   CC  OO   OO   |
+   |    LL       EEEE           DD   DD   II   CC       OO   OO   |
+   |    LL       EE             DD   DD   II   CC       OO   OO   |
+   |    LL       EE             DD   DD   II   CC   CC  OO   OO   |
+   |    LLLLLLL  EEEEEEE        DDDDDD   IIII   CCCCC    OOOOO    |
+   |                                                              |
+   +--------------------------------------------------------------+
+
+
+  L'installation vous a cree un certain nombre de sous-repertoires:
+
+                lexique
+                manuel
+                outils
+                sources
+
+  Il s'agit d'une installation par defaut, vous etes maintenant
+  libre d'organiser les fichiers comme bon vous semble.
+
+  Installez la page de manuel dico.1 dans /usr/man/man1 ou si vous
+  etes sous DOS, LISEZ le fichier MANUEL.TXT !!!!!!!!!!!!!!!!!!!!
+
+  Le sous-repertoire LEXIQUE contient LE DICO proprement dit, tous
+  les fichiers [a-z].dic sont dedans, en Ascii accentue.
+
+  Le sous-repertoire MANUEL ( celui-ci) contient les divers fichiers
+  de documentation QUE VOUS DEVEZ ABSOLUMENT LIRE avant de poser
+  des questions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  Le sous-repertoire SOURCES contient les sources de "Le Dico" et
+  des differents utilitaires fournis.
+
+  Le sous-repertoire OUTILS contient ( pour l'adaptation MS-DOS ) les
+  executables des petits utilitaires ecrits rapidement pour la
+  realisation de tout ca.

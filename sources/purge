@@ -1,0 +1,7 @@
+# tri.sh: Tri des fichiers .dic par ordre alpha - dictionnaire.
+for i in [a-z].dic
+	do
+		echo 'uniq on ' $i
+		uniq  < $i > uniq.tmp
+		cp uniq.tmp  $i
+	done

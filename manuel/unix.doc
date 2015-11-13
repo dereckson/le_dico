@@ -1,0 +1,31 @@
+
+    Note a l'attention des utilisateurs de la version originale
+    -----------------------------------------------------------
+
+  Les binaires fournis sont pour le systeme Linux, parceque cet OS
+  est gratuit et que Le Dico a ete realise avec :-)
+
+  Les binaires Linux  sont  compiles  en  option  -static,  ce  qui
+  explique   leur  taille  mais  les  rend  independants  de  toute
+  librairie partagee.
+
+
+  D'abord,  installez la page de manuel "dico.1" dans le repertoire
+  /usr/man/man1, enfin la ou vous avez  les  pages  de  manuel  des
+  commandes  utilisateur  pour la commande "man".  Ce manuel est en
+  Francais, c'est la moindre des choses :-)
+
+  Les fichiers du lexique sont composes avec des caracteres 8  bits
+  afin  de  pouvoir restituer l'accentuation Francaise.  La version
+  Linux fournie utilise le jeu ISO 8859-1 (Latin-1), tres courant.
+
+  Si votre terminal ne peut  afficher  ce  jeu  de  caracteres,  le
+  programme  "dico"  n'est  pas qu'un simple grep un peu bricole...
+  Il vous donne la possibilite d'utiliser tout de meme ces  donnees
+  sans avoir a modifier tout le lexique:
+
+  Vous  pouvez  definir  une  variable  d'environnement "DICOTERM",
+  indiquant comment translater l'affichage.  Lisez donc  le  manuel
+  au paragraphe "Caracteres accentues".  Merci...
+
+                                                     Rene Cougnenc.

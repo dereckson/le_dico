@@ -1,0 +1,7 @@
+# tri.sh: Tri des fichiers .dic par ordre alpha - dictionnaire.
+for i in [a-z].dic
+	do
+		echo 'sorting ' $i
+		sort -d -f < $i > sort.tmp
+		cp sort.tmp  $i
+	done
